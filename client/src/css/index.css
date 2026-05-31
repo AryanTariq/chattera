@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700&display=swap');
+
+/* ─── Design tokens ─────────────────────────────────────────── */
+:root {
+  --bg-base:       #0a0a0a;
+  --bg-surface:    #0f0f0f;
+  --bg-raised:     #141414;
+  --bg-hover:      #161616;
+  --bg-input:      #141414;
+
+  --border-default: #1e1e1e;
+  --border-subtle:  #161616;
+  --border-strong:  #2a2a2a;
+  --border-input:   #252525;
+  --border-focus:   #4ade8f;
+
+  --text-primary:   #e8e3da;
+  --text-secondary: #8a8680;
+  --text-muted:     #636363;
+  --text-faint:     #616060;
+
+  --accent:         #4ade8f;
+  --accent-dim:     #1a2e22;
+  --accent-border:  #2d5c3a;
+  --accent-text:    #0a1f12;
+
+  --font-display: 'Syne', sans-serif;
+  --font-mono:    'DM Mono', monospace;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-pill: 9999px;
+
+  --transition: 120ms ease;
+
+  --navbar-height: 56px;
+}
+
+/* ─── Light theme ────────────────────────────────────────────── */
+[data-theme="light"] {
+    --bg-base:       #f5f4f0;
+    --bg-surface:    #ffffff;
+    --bg-raised:     #f0ede8;
+    --bg-hover:      #ebe8e2;
+    --bg-input:      #f7f5f2;
+
+    --border-default: #ddd9d2;
+    --border-subtle:  #e8e4de;
+    --border-strong:  #c8c4bc;
+    --border-input:   #d4d0c8;
+    --border-focus:   #16a34a;
+
+    --text-primary:   #1a1916;
+    --text-secondary: #4a4742;
+    --text-muted:     #7a7570;
+    --text-faint:     #a8a49e;
+
+    --accent:         #16a34a;
+    --accent-dim:     #dcfce7;
+    --accent-border:  #86efac;
+    --accent-text:    #ffffff;
+}
+
+/* ─── Reset ─────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: 15px;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: opacity var(--transition);
+}
+
+a:hover { opacity: 0.8; }
+
+/* ─── Typography ─────────────────────────────────────────────── */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+  line-height: 1.15;
+}
+
+h1 { font-size: 2rem; }
+h2 { font-size: 1.4rem; }
+h3 { font-size: 1.1rem; font-weight: 600; }
+
+p { color: var(--text-secondary); line-height: 1.6; }
+
+/* ─── Layout utilities ───────────────────────────────────────── */
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.page-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+/* ─── Divider ────────────────────────────────────────────────── */
+.divider {
+  height: 0.5px;
+  background: var(--border-default);
+  border: none;
+  margin: 0;
+}
+
+/* ─── Scrollbar ──────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: var(--radius-pill);
+}

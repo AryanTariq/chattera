@@ -1,0 +1,254 @@
+/* ─── App shell ──────────────────────────────────────────────── */
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  max-height: 100vh;
+  overflow-y: auto; 
+}
+
+/* ─── Navbar ─────────────────────────────────────────────────── */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--bg-surface);
+  border-bottom: 0.5px solid var(--border-default);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  height: 56px;
+}
+
+.navbar__logo {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.25rem;
+  letter-spacing: -0.04em;
+  color: var(--text-primary);
+}
+
+.navbar__logo span {
+  color: var(--accent);
+}
+
+.navbar__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  user-select: none; 
+}
+
+.navbar__username {
+  font-family: var(--font-mono);
+  font-size: 18px;
+  color: var(--accent);
+  letter-spacing: 0.02em;
+  margin-right: 15px;
+  text-decoration: none;
+}
+
+.navbar__actions > * {
+  flex-shrink: 0;
+}
+
+/* ─── Avatar ─────────────────────────────────────────────────── */
+.avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--accent-dim);
+  border: 0.5px solid var(--accent-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  color: var(--accent);
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: border-color var(--transition);
+}
+
+.avatar:hover {
+  border-color: var(--accent);
+}
+
+.avatar--sm {
+  width: 48px;
+  height: 48px;
+  font-size: 10px;
+}
+
+/* ─── Avatar image ───────────────────────────────────────────── */
+.avatar__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    display: block;
+}
+
+/* ─── Buttons ────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 13px;
+  border-radius: var(--radius-md);
+  padding: 8px 16px;
+  border: 0.5px solid transparent;
+  cursor: pointer;
+  transition:
+    background-color var(--transition),
+    border-color var(--transition),
+    color var(--transition),
+    transform var(--transition);
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.btn:active { transform: scale(0.97); }
+
+/* Primary — accent fill */
+.btn--primary {
+  background: var(--accent);
+  color: var(--accent-text);
+  border-color: var(--accent);
+}
+
+.btn--primary:hover {
+  background: #5ef7a3;
+  border-color: #5ef7a3;
+}
+
+/* Ghost — outline */
+.btn--ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  border-color: var(--border-strong);
+}
+
+.btn--ghost:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+/* Full width */
+.btn--full {
+  width: 100%;
+}
+
+/* Sizes */
+.btn--sm { padding: 5px 12px; font-size: 12px; }
+.btn--lg { padding: 12px 20px; font-size: 15px; }
+
+/* ─── Delete button ──────────────────────────────────────────── */
+.btn--danger {
+  background: transparent;
+  color: #ef4444;
+  border: 0.5px solid rgba(239, 68, 68, 0.5);
+  padding: 2px 8px;
+  font-size: 12px;
+  font-family: var(--font-mono);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  margin-left: auto;       
+  user-select: none;     
+  transition: all var(--transition);
+}
+
+.btn--danger:hover {
+  background: rgba(239, 68, 68, 0.06);
+  border-color: #ef4444;
+}
+
+.btn--danger:active {
+  transform: scale(0.96);
+}
+
+/* ─── Theme toggle ───────────────────────────────────────────── */
+.theme-toggle {
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.theme-toggle__track {
+    display: flex;
+    align-items: center;
+    width: 52px;
+    height: 28px;
+    background: var(--bg-raised);
+    border: 0.5px solid var(--border-strong);
+    border-radius: var(--radius-pill);
+    padding: 3px;
+    transition: background var(--transition), border-color var(--transition);
+    position: relative;
+}
+
+[data-theme="light"] .theme-toggle__track {
+    background: var(--accent-dim);
+    border-color: var(--accent-border);
+}
+
+.theme-toggle__thumb {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--bg-surface);
+    border: 0.5px solid var(--border-default);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    color: var(--text-muted);
+    transition: transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1),
+                background var(--transition),
+                color var(--transition);
+    will-change: transform;
+}
+
+/* Slide thumb to the right in light mode */
+[data-theme="light"] .theme-toggle__thumb {
+    transform: translateX(24px);
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+}
+
+/* ─── Google button ──────────────────────────────────────────── */
+.btn--google {
+    background: var(--bg-raised);
+    color: var(--text-primary);
+    border: 0.5px solid var(--border-strong);
+    width: 100%;
+    padding: 10px 16px;
+    font-size: 14px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all var(--transition);
+    user-select: none;
+}
+
+.btn--google:hover {
+    background: var(--bg-hover);
+    border-color: var(--text-muted);
+}
+
+.btn--google:active {
+    transform: scale(0.98);
+}
