@@ -121,7 +121,12 @@ const Profile = () => {
     // Handle the event where user deletes their chatt on the profile page
     const handleChattDelete = (deletedChatt) => {
         setChatts((prev) =>
-            prev.filter((chatt) => chatt._id !== deletedChatt._id)
+            prev.filter((chatt) => 
+                // Remove the deleted chatt itself
+                chatt._id !== deletedChatt._id &&
+                // Also remove replies to the deleted chatt 
+                chatt.parentId !== deletedChatt._id      
+            )
         );
     };
 

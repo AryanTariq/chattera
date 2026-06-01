@@ -8,6 +8,7 @@ import Profile from "./pages/Profile";
 import NotFound from './pages/NotFound';
 import Navbar from "./components/Navbar";
 import OAuthCallback from './pages/OAuthCallback';
+import ChattDetail from './pages/ChattDetail';
 
 function App() {
   const { user } = useAuthContext();
@@ -32,6 +33,8 @@ function App() {
               } />
 
             <Route path="/profile/:username" element={<Profile />} />
+
+            <Route path="/chatt/:id" element={<ChattDetail />} />
 
             <Route path="/auth/callback" element={<OAuthCallback />} />
 

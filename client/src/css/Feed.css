@@ -691,3 +691,14 @@
 .lightbox-arrow i {
     font-size: 24px;
 }
+
+/* ─── Highlighted reply ──────────────────────────────────────── */
+.chatt-card--highlighted {
+    background: rgba(74, 222, 143, 0.04);
+    border-left: 3px solid var(--accent);
+}
+
+/* ─── Reply action button ────────────────────────────────────── */
+.chatt-action--reply:hover {
+    color: #60a5fa;  /* blue — distinct from green like */
+}

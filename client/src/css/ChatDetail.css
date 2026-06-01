@@ -1,0 +1,53 @@
+/* ─── Chatt detail page ──────────────────────────────────────── */
+.chatt-detail {
+    max-width: 600px;
+    margin: 0 auto;
+    border-left: 0.5px solid var(--border-default);
+    border-right: 0.5px solid var(--border-default);
+    min-height: calc(100vh - var(--navbar-height));
+}
+
+/* ─── Header ─────────────────────────────────────────────────── */
+.chatt-detail__header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 20px;
+    border-bottom: 0.5px solid var(--border-default);
+    position: sticky;
+    top: var(--navbar-height);
+    background: var(--bg-surface);
+    z-index: 90;
+}
+
+.chatt-detail__title {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+}
+
+/* ─── Replies header ─────────────────────────────────────────── */
+.chatt-detail__replies-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+}
+
+/* ─── Reply composer variant ─────────────────────────────────── */
+.composer--reply {
+    border-left: 2px solid var(--border-default);
+    margin-left: 20px;
+    padding-left: 16px;
+    border-bottom: none;
+}
+
+/* ─── Reply sort divider between buttons ─────────────────────── */
+.profile__inline-sort-divider {
+    color: var(--text-faint);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    user-select: none;
+}

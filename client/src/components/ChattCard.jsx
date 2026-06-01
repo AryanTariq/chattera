@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import useAuthContext from '../hooks/useAuthContext';
 import useChatteraContext from '../hooks/useChatteraContext';
@@ -10,9 +10,10 @@ import ImageLightbox from './ImageLightbox';
 import ChattEditForm from './forms/ChattEdit';
 import { formatRelativeDate, formatFullDate } from '../utils/dateFormat';
 
-const ChattCard = ({ post, isAuthor, onUpdate, onDelete }) => {
+const ChattCard = ({ post, isAuthor, onUpdate, onDelete, highlighted, disableNavigation }) => {
     const { user } = useAuthContext();
     const { dispatch } = useChatteraContext();
+    const navigate = useNavigate();
 
     const [isEditing, setIsEditing]         = useState(false);
     const [showAlert, setShowAlert]         = useState(false);
@@ -73,6 +74,15 @@ const ChattCard = ({ post, isAuthor, onUpdate, onDelete }) => {
         setIsEditing(false);
     };
 
+    // Handle click on the card, navigate to chatt detail page
+    const handleCardClick = (e) => {
+        // Don't navigate if user clicked a link, button, or interactive element
+        if (e.target.closest('a, button, textarea, input, video')) return;
+        if (disableNavigation) return;
+
+        navigate(`/chatt/${post._id}`);
+    };
+
     // Only image media is passed to the lightbox
     const images = post.media?.filter(m => m.type === 'image') || [];
 
@@ -96,7 +106,11 @@ const ChattCard = ({ post, isAuthor, onUpdate, onDelete }) => {
                 />
             )}
 
-            <div className="chatt-card">
+            <div 
+                className={`chatt-card ${highlighted ? 'chatt-card--highlighted' : ''}`} 
+                onClick={handleCardClick}
+            >
+
                 <Link to={`/profile/${post.user?.username}`}
                       className="avatar avatar--sm"
                 >
@@ -180,9 +194,12 @@ const ChattCard = ({ post, isAuthor, onUpdate, onDelete }) => {
                                                 src={item.url}
                                                 alt=""
                                                 className="chatt-media__item chatt-media__item--clickable"
-                                                onClick={() => setLightboxIndex(
-                                                    images.findIndex(img => img.url === item.url)
-                                                )}
+                                                onClick={(e) => { 
+                                                    e.stopPropagation(); 
+                                                    setLightboxIndex(
+                                                        images.findIndex(img => img.url === item.url)
+                                                    )
+                                                }}
                                             />
                                         )
                                     ))}
@@ -195,18 +212,38 @@ const ChattCard = ({ post, isAuthor, onUpdate, onDelete }) => {
                     <div className="chatt-actions">
                         <button
                             className={`chatt-action chatt-action--like ${isLiked ? 'active' : ''}`}
-                            onClick={handleLike}
+                            onClick={(e) => { e.stopPropagation(); handleLike(); }}
                             style={{ cursor: user ? 'pointer' : 'default' }}
                         >
                             <i className={`bi ${isLiked ? 'bi-heart-fill' : 'bi-heart'}`} />
                             {post.likes?.length ?? 0}
                         </button>
 
+                        {/* Reply button, only on top-level chatts */}
+                        {!post.parentId && (
+                            <button
+                                className="chatt-action chatt-action--reply"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    navigate(`/chatt/${post._id}`);
+                                }}
+                            >
+                                <i className="bi bi-chat" />
+                                {post.replyCount ?? 0}
+                            </button>
+                        )}  
+
                         {/* Display edit and delete buttons if user is logged in and author */}
                         {isAuthor && !isEditing && (
                             <>
-                                <EditChatt onClick={() => setIsEditing(true)} />
-                                <DeleteChatt onClick={() => setShowAlert(true)} />
+                                <EditChatt onClick={(e) => {
+                                    e.stopPropagation();
+                                    setIsEditing(true);
+                                }} />
+                                <DeleteChatt onClick={(e) => {
+                                    e.stopPropagation();
+                                    setShowAlert(true);
+                                }} />
                             </>
                         )}
                     </div>

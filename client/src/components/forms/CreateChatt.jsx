@@ -6,7 +6,7 @@ import useChatteraContext from '../../hooks/useChatteraContext';
 import axios from 'axios';
 
 // Form for creating a new chatt
-const CreateChatt = () => {
+const CreateChatt = ({ parentId = null, onSuccess = null }) => {
     const navigate = useNavigate();
     const { user } = useAuthContext();
     const { dispatch } = useChatteraContext();
@@ -31,17 +31,25 @@ const CreateChatt = () => {
             formData.append('text', text);
             mediaFiles.forEach(file => formData.append('media', file));
 
-            const res = await axios.post('http://localhost:5000/api/chatts/', formData, {
+            // Use reply endpoint if parentId provided, otherwise regular endpoint
+            const url = parentId
+                ? `http://localhost:5000/api/chatts/${parentId}/replies`
+                : 'http://localhost:5000/api/chatts/';
+
+            const res = await axios.post(url, formData, {
                 headers: {
                     'Authorization': `Bearer ${user.token}`,
                     'Content-Type': 'multipart/form-data'
                 }
             });
 
-            dispatch({
-                type: "CREATE_CHATT",
-                payload: res.data
-            })
+            // If this is a reply, call onSuccess callback to update parent chatt's replies
+            if (parentId && onSuccess) {
+                onSuccess(res.data);
+            } else {
+                dispatch({ type: "CREATE_CHATT", payload: res.data });
+            }
+
             setText('');
             setMediaFiles([]);
             setPreviews([]);
@@ -109,7 +117,7 @@ const CreateChatt = () => {
                     
                     <textarea
                         className="composer__textarea"
-                        placeholder="What's happening?"
+                        placeholder={parentId ? "Post your reply..." : "What's happening?"}
                         value={text}
                         onChange={(e) => setText(e.target.value)}
                         onInput={(e) => {
@@ -166,11 +174,10 @@ const CreateChatt = () => {
                             disabled={posting}
                             style={{ minWidth: '68px' }}
                         >
-                            {posting ? (
-                                <span className="composer__spinner" />
-                            ) : (
-                                'Chatt'
-                            )}
+                            {posting 
+                                ? <span className="composer__spinner" />
+                                : parentId ? 'Reply' : 'Chatt'
+                            }
                         </button>
                     </div>
 
