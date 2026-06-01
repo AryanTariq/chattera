@@ -24,42 +24,42 @@ Users can post "chatts", like them, and customise their profiles.
 
 1. Clone the repo
 
-   \`\`\`bash
+   ```bash
    git clone https://github.com/AryanTariq/chattera.git
    cd chattera
-   \`\`\`
+   ```
 
 2. Install server dependencies
 
-   \`\`\`bash
+   ```bash
    cd server
    npm install
-   \`\`\`
+   ```
 
 3. Install client dependencies
 
-   \`\`\`bash
+   ```bash
    cd ../client
    npm install
-   \`\`\`
+   ```
 
 4. Set up environment variables (see below)
 
 5. Run the app
 
-   \`\`\`bash
+   ```bash
    # In /server
    npm run dev
 
    # In /client
    npm run dev
-   \`\`\`
+   ```
 
 ## Environment Variables
 
 ### Server `/server/.env`
 
-\`\`\`
+```
 PORT=5000
 MONGO_URI=mongodb+srv://...
 JWT_SECRET=your_jwt_secret
@@ -71,17 +71,17 @@ GOOGLE_CLIENT_ID=your_google_client_id
 GOOGLE_CLIENT_SECRET=your_google_client_secret
 GOOGLE_CALLBACK_URL=http://localhost:5000/api/auth/google/callback
 CLIENT_URL=http://localhost:5173
-\`\`\`
+```
 
 ### Client `/client/.env`
 
-\`\`\`
+```
 VITE_API_URL=http://localhost:5000
-\`\`\`
+```
 
 ## Project Structure
 
-\`\`\`
+```
 chattera/
 ├── client/                  # React frontend
 │   ├── src/
@@ -99,7 +99,7 @@ chattera/
     ├── models/              # Mongoose schemas
     ├── routes/              # Express routes
     └── utils/               # Helper functions
-\`\`\`
+```
 
 ## Features
 
@@ -109,4 +109,3 @@ chattera/
 - User profiles with avatar, banner, bio
 - Light and dark mode
 - Responsive design
-\`\`\`
