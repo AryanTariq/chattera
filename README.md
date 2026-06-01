@@ -1,7 +1,7 @@
 # Chattera
 
 A full-stack social media platform built with the MERN stack.
-Users can post "chatts", like them, and customise their profiles.
+Users can post "chatts", like, reply, and customise their profiles.
 
 ## Tech Stack
 
