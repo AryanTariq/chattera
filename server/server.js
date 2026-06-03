@@ -12,9 +12,23 @@ const errorHandler = require("./middleware/errorHandler")
 
 const app = express();
 
-// Middleware
-app.use(cors({ 
-    origin: process.env.CLIENT_URL,
+const allowedOrigins = [
+    process.env.CLIENT_URL,    
+    'http://localhost:5173',          // local Vite dev server
+    'http://localhost:4173',          // local Vite preview server
+].filter(Boolean);                    // remove any undefined entries
+
+app.use(cors({
+    origin: (origin, callback) => {
+        // Allow requests with no origin (Postman, curl, server-to-server)
+        if (!origin) return callback(null, true);
+
+        if (allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error(`CORS blocked for origin: ${origin}`));
+        }
+    },
     credentials: true
 }));
 app.use(express.json());
