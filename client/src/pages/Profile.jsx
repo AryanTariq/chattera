@@ -1,7 +1,7 @@
 import '../css/Profile.css';
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../utils/api';
 import useAuthContext from '../hooks/useAuthContext';
 import EditProfile from '../components/forms/EditProfile';
 import UserChatts from '../components/profile/UserChatts';
@@ -33,7 +33,7 @@ const Profile = () => {
             setNotFound(false);
 
             try {
-                const res = await axios.get(`http://localhost:5000/api/users/u/${username}`)
+                const res = await api.get(`/api/users/u/${username}`)
                 setProfile(res.data);
                 
             } catch (err) {
@@ -56,8 +56,8 @@ const Profile = () => {
             setChattsLoading(true);
 
             try {
-                const res = await axios.get(
-                    `http://localhost:5000/api/chatts/user/${profile._id}?sort=${sort}`
+                const res = await api.get(
+                    `/api/chatts/user/${profile._id}?sort=${sort}`
                 );
                 setChatts(res.data);
 
@@ -79,8 +79,8 @@ const Profile = () => {
             setLikedLoading(true);
 
             try {
-                const res = await axios.get(
-                    `http://localhost:5000/api/chatts/liked/${profile._id}?sort=${sort}`
+                const res = await api.get(
+                    `/api/chatts/liked/${profile._id}?sort=${sort}`
                 );
 
                 setLikedChatts(res.data);
@@ -100,8 +100,8 @@ const Profile = () => {
 
         // Refetch chatts when profile updates, so user's chatts reflect update
         try {
-            const res = await axios.get(
-                `http://localhost:5000/api/chatts/user/${updatedUser._id}?sort=${sort}`
+            const res = await api.get(
+                `/api/chatts/user/${updatedUser._id}?sort=${sort}`
             );
             setChatts(res.data);
         } catch (err) {

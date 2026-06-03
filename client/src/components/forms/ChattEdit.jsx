@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import axios from 'axios';
+import api from '../../utils/api';
 import useAuthContext from '../../hooks/useAuthContext';
 import useChatteraContext from '../../hooks/useChatteraContext';
 import ImageLightbox from '../ImageLightbox';
@@ -31,8 +31,8 @@ const ChattEditForm = ({ post, onSave, onCancel }) => {
         setSaving(true);
 
         try {
-            const res = await axios.patch(
-                'http://localhost:5000/api/chatts/' + post._id,
+            const res = await api.patch(
+                `/api/chatts/${post._id}`,
                 { text: editText, media: editMedia },
                 { headers: { Authorization: `Bearer ${user.token}` } }
             );

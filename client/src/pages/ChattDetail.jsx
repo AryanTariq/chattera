@@ -2,7 +2,7 @@ import '../css/Feed.css';
 import '../css/ChatDetail.css';
 import { useEffect, useState, useRef } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
-import axios from 'axios';
+import api from '../utils/api';
 import ChattCard from '../components/ChattCard';
 import CreateChatt from '../components/forms/CreateChatt';
 import useAuthContext from '../hooks/useAuthContext';
@@ -28,8 +28,8 @@ const ChattDetail = () => {
             setLoading(true);
 
             try {
-                const res = await axios.get(
-                    `http://localhost:5000/api/chatts/detail/${id}`
+                const res = await api.get(
+                    `/api/chatts/detail/${id}`
                 );
                 const data = res.data;
 
@@ -66,8 +66,8 @@ const ChattDetail = () => {
             setRepliesLoading(true);
 
             try {
-                const res = await axios.get(
-                    `http://localhost:5000/api/chatts/${chatt._id}/replies?sort=${sort}`
+                const res = await api.get(
+                    `/api/chatts/${chatt._id}/replies?sort=${sort}`
                 );
                 setReplies(res.data);
             } catch (err) {

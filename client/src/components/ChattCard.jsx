@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../utils/api';
 import useAuthContext from '../hooks/useAuthContext';
 import useChatteraContext from '../hooks/useChatteraContext';
 import DeleteChatt from './buttons/DeleteChatt';
@@ -29,8 +29,8 @@ const ChattCard = ({ post, isAuthor, onUpdate, onDelete, highlighted, disableNav
         if (!user) return;
 
         try {
-            const res = await axios.patch(
-                `http://localhost:5000/api/chatts/like/${post._id}`,
+            const res = await api.patch(
+                `/api/chatts/like/${post._id}`,
                 {},
                 { headers: { Authorization: `Bearer ${user.token}` } }
             );
@@ -49,8 +49,8 @@ const ChattCard = ({ post, isAuthor, onUpdate, onDelete, highlighted, disableNav
     // Handle event when user deletes their chatt
     const handleDelete = async () => {
         try {
-            const res = await axios.delete(
-                'http://localhost:5000/api/chatts/' + post._id,
+            const res = await api.delete(
+                `/api/chatts/${post._id}`,
                 { headers: { Authorization: `Bearer ${user.token}` } }
             );
 

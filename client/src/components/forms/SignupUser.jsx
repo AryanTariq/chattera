@@ -2,7 +2,7 @@ import '../../css/SignupLogin.css';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import useAuthContext from '../../hooks/useAuthContext';
-import axios from 'axios';
+import api from '../../utils/api';
 import GoogleButton from '../buttons/GoogleButton';
 
 const SignupUser = () => {
@@ -60,7 +60,7 @@ const SignupUser = () => {
         const user = { username, password, email, bio };
 
         try {
-            const res = await axios.post('http://localhost:5000/api/users/signup/', user);
+            const res = await api.post('/api/users/signup/', user);
             
             localStorage.setItem('user', JSON.stringify({
                 _id: res.data._id,

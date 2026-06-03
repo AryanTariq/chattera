@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import useAuthContext from '../../hooks/useAuthContext';
 import useChatteraContext from '../../hooks/useChatteraContext';
-import axios from 'axios';
+import api from '../../utils/api';
 
 // Form for creating a new chatt
 const CreateChatt = ({ parentId = null, onSuccess = null }) => {
@@ -33,10 +33,10 @@ const CreateChatt = ({ parentId = null, onSuccess = null }) => {
 
             // Use reply endpoint if parentId provided, otherwise regular endpoint
             const url = parentId
-                ? `http://localhost:5000/api/chatts/${parentId}/replies`
-                : 'http://localhost:5000/api/chatts/';
+                ? `/api/chatts/${parentId}/replies`
+                : '/api/chatts/';
 
-            const res = await axios.post(url, formData, {
+            const res = await api.post(url, formData, {
                 headers: {
                     'Authorization': `Bearer ${user.token}`,
                     'Content-Type': 'multipart/form-data'

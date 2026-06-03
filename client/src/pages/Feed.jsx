@@ -1,5 +1,5 @@
 import '../css/Feed.css';
-import axios from 'axios';
+import api from '../utils/api';
 import { useEffect, useState } from 'react';
 import CreateChatt from "../components/forms/CreateChatt";
 import ChattCard from '../components/ChattCard';
@@ -14,7 +14,7 @@ const Feed = () => {
     useEffect(() => {
         const fetchChatts = async () => {
             try {
-                const res = await axios.get('http://localhost:5000/api/chatts/');
+                const res = await api.get('/api/chatts/');
 
                 dispatch({
                     type: "SET_CHATTS", 

@@ -1,6 +1,6 @@
 import '../../css/Profile.css';
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../utils/api';
 import useAuthContext from '../../hooks/useAuthContext';
 import useChatteraContext from '../../hooks/useChatteraContext';
 import ImageCropper from '../ImageCropper';
@@ -85,8 +85,8 @@ const EditProfile = ({ profile, onSave, onCancel }) => {
 
         formData.append(endpoint, file);
 
-        const res = await axios.post(
-            `http://localhost:5000/api/users/${profile._id}/${endpoint}`,
+        const res = await api.post(
+            `/api/users/${profile._id}/${endpoint}`,
             formData,
             {
                 headers: {
@@ -118,8 +118,8 @@ const EditProfile = ({ profile, onSave, onCancel }) => {
             }
 
             // Save text fields
-            const res = await axios.patch(
-                `http://localhost:5000/api/users/${profile._id}`,
+            const res = await api.patch(
+                `/api/users/${profile._id}`,
                 { 
                     displayName, 
                     bio        
@@ -133,7 +133,7 @@ const EditProfile = ({ profile, onSave, onCancel }) => {
             authDispatch({ type: 'UPDATE_USER', payload: updatedUser });
 
             // Refetch chatts to display updated user info
-            const chattsRes = await axios.get('http://localhost:5000/api/chatts/');
+            const chattsRes = await api.get('/api/chatts/');
             chattsDispatch({ type: 'SET_CHATTS', payload: chattsRes.data });
 
             onSave(updatedUser);
@@ -154,8 +154,8 @@ const EditProfile = ({ profile, onSave, onCancel }) => {
     // Handle event when user removes avatar
     const removeAvatar = async () => {
         try {
-            const res = await axios.delete(
-                `http://localhost:5000/api/users/${profile._id}/avatar`,
+            const res = await api.delete(
+                `/api/users/${profile._id}/avatar`,
                 { headers: { Authorization: `Bearer ${user.token}` } }
             );
 
@@ -172,8 +172,8 @@ const EditProfile = ({ profile, onSave, onCancel }) => {
     // Handle event when user removes banner
     const removeBanner = async () => {
         try {
-            const res = await axios.delete(
-                `http://localhost:5000/api/users/${profile._id}/banner`,
+            const res = await api.delete(
+                `/api/users/${profile._id}/banner`,
                 { headers: { Authorization: `Bearer ${user.token}` } }
             );
 
